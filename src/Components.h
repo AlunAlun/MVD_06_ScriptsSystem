@@ -99,32 +99,6 @@ struct Light : public Component {
     lm::vec3 color;
 };
 
-enum ControlComponentType {
-    ControlComponentTypeFree,
-    ControlComponentTypeFPS,
-	ControlComponentMask,
-};
-
-struct Control: public Component {
-    ControlComponentType input_type;
-    
-	float move_speed;
-    float turn_speed;
-    
-    //FPS stuff
-    int FPS_collider_down;
-    int FPS_collider_left;
-    int FPS_collider_right;
-    int FPS_collider_forward;
-    int FPS_collider_back;
-    bool FPS_can_jump = true;
-    float FPS_jump_force = 0.0f;
-    float FPS_jump_initial_force = 12.0f;
-    float FPS_jump_force_slowdown = 7.0f;
-    float FPS_gravity = 9.8f;
-    float FPS_height = 2.0f;
-};
-
 enum ColliderType {
     ColliderTypeBox,
     ColliderTypeRay
@@ -167,7 +141,6 @@ std::vector<Transform>,
 std::vector<Mesh>,
 std::vector<Camera>,
 std::vector<Light>,
-std::vector<Control>,
 std::vector<Collider>
 > ComponentArrays;
 
@@ -179,10 +152,9 @@ template<> struct type2int<Transform> { enum { result = 0 }; };
 template<> struct type2int<Mesh> { enum { result = 1 }; };
 template<> struct type2int<Camera> { enum { result = 2 }; };
 template<> struct type2int<Light> { enum { result = 3 }; };
-template<> struct type2int<Control> { enum { result = 4 }; };
-template<> struct type2int<Collider> { enum { result = 5 }; };
+template<> struct type2int<Collider> { enum { result = 4 }; };
 //UPDATE THIS!
-const int NUM_TYPE_COMPONENTS = 6;
+const int NUM_TYPE_COMPONENTS = 5;
 
 /**** ENTITY ****/
 

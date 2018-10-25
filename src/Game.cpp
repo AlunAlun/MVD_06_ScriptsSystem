@@ -69,25 +69,17 @@ int createFree(const lm::vec3& position) {
 	player_cam.position = lm::vec3(0.0f, 3.0f, 5.0f);
 	player_cam.forward = lm::vec3(0.0f, 0.0f, -1.0f);
 	player_cam.setPerspective(60.0f*DEG2RAD, 1, 0.1f, 10000.0f);
-	Control& player_control = ECS.createComponentForEntity<Control>(ent_player);
-	player_control.input_type = ControlComponentTypeFree;
-	player_control.move_speed = 5.0f;
-	player_control.turn_speed = 0.5f;
 	return ent_player;
 }
 
-int createPlayer(const lm::vec3& position) {
+int createPlayer(const lm::vec3& position, ControlSystem& sys) {
     int ent_player = ECS.createEntity("Player");
     Camera& player_cam = ECS.createComponentForEntity<Camera>(ent_player);
     ECS.getComponentFromEntity<Transform>(ent_player).translate(position.x, position.y, position.z);
     player_cam.position = lm::vec3(position.x, position.y, position.z);
     player_cam.forward = lm::vec3(0.0f, 0.0f, -1.0f);
     player_cam.setPerspective(60.0f*DEG2RAD, 1, 0.01f, 100.0f);
-    Control& player_control = ECS.createComponentForEntity<Control>(ent_player);
-    player_control.input_type = ControlComponentTypeFPS;
-    player_control.move_speed = 5.0f;
-    player_control.turn_speed = 0.5f;
-    
+
     //FPS colliders
     int ent_down_ray = ECS.createEntity("Down Ray");
     Transform& down_ray_trans = ECS.createComponentForEntity<Transform>(ent_down_ray);
@@ -130,11 +122,11 @@ int createPlayer(const lm::vec3& position) {
     back_ray_collider.max_distance = 2.0f;
     
     //set all colliders for FPS control
-    player_control.FPS_collider_down = ECS.getComponentID<Collider>(ent_down_ray);
-    player_control.FPS_collider_left = ECS.getComponentID<Collider>(ent_left_ray);
-    player_control.FPS_collider_right = ECS.getComponentID<Collider>(ent_right_ray);
-    player_control.FPS_collider_forward = ECS.getComponentID<Collider>(ent_forward_ray);
-    player_control.FPS_collider_back = ECS.getComponentID<Collider>(ent_back_ray);
+	sys.FPS_collider_down = ECS.getComponentID<Collider>(ent_down_ray);
+	sys.FPS_collider_left = ECS.getComponentID<Collider>(ent_left_ray);
+	sys.FPS_collider_right = ECS.getComponentID<Collider>(ent_right_ray);
+	sys.FPS_collider_forward = ECS.getComponentID<Collider>(ent_forward_ray);
+	sys.FPS_collider_back = ECS.getComponentID<Collider>(ent_back_ray);
     
     return ent_player;
 }
@@ -201,7 +193,7 @@ void Game::init() {
 
 	//players, cameras and lights
 	int ent_light_1 = createLight("Light 1", lm::vec3(100.0f, 100.0f, 100.0f), lm::vec3(1.0f, 1.0f, 1.0f));
-	int ent_player = createPlayer(lm::vec3(-2.0f, 3.0f, -2.0f));
+	int ent_player = createPlayer(lm::vec3(-2.0f, 3.0f, -2.0f), control_system_);
     ECS.main_camera = ECS.getComponentID<Camera>(ent_player);
 
 
