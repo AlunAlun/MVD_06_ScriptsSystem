@@ -331,3 +331,8 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+
+!data/
+!data/*
+!data/assets/
+!data/assets/*
