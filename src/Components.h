@@ -120,7 +120,7 @@ struct Collider: public Component {
     
     //collision state
     bool colliding;
-    Collider* other;
+    int other; //index of other collider in collider array in the ECS
     lm::vec3 collision_point;
     float collision_distance;
     
@@ -128,7 +128,7 @@ struct Collider: public Component {
         local_halfwidth = lm::vec3(0.5, 0.5, 0.5); //default dimensions = 1 in each axis
         max_distance = 10000000.0f; //infinite ray by default
         colliding = false; // not colliding
-        other = nullptr; //no other collider
+        other = -1; //no other collider
     }
     
 };
