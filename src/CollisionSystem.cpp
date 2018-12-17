@@ -17,7 +17,7 @@ void CollisionSystem::update(float dt) {
     for (auto& col : colliders){
         col.colliding = false;
         col.collision_distance = 10000000.0f;
-        col.other = nullptr;
+        col.other = -1;
     }
     
     //test ray-box collision. This works by looping over ray colliders. For each one, we loop over box colliders
@@ -44,7 +44,7 @@ void CollisionSystem::update(float dt) {
                         colliders[i].colliding = colliders[j].colliding = true;
                         colliders[i].collision_point = colliders[j].collision_point = col_point;
                         colliders[i].collision_distance = colliders[j].collision_distance = col_distance;
-
+			colliders[i].other = j; colliders[j].other = i;
 						//send messae
                         //std::cout << "collision at " << col_point.x << ", " << col_point.y << ", " << col_point.z << ", " << col_distance << "\n";
                     }
