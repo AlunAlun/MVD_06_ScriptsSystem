@@ -80,16 +80,17 @@ void ControlSystem::updateFPS(float dt) {
 	float move_speed_dt = move_speed_ * dt;
 	float turn_speed_dt = turn_speed_ * dt;
 
-	//rotate camera just like Free movement
-	lm::mat4 R_yaw, R_pitch;
-	//yaw - axis is up vector of world
-	R_yaw.makeRotationMatrix(mouse.delta_x * turn_speed_dt, lm::vec3(0, 1, 0));
-	camera.forward = R_yaw * camera.forward;
-	//pitch - axis is strafe vector of camera i.e cross product of cam_forward and up
-	lm::vec3 pitch_axis = camera.forward.normalize().cross(lm::vec3(0, 1, 0));
-	R_pitch.makeRotationMatrix(mouse.delta_y * turn_speed_dt, pitch_axis);
-	camera.forward = R_pitch * camera.forward;
-
+    if (input[GLFW_MOUSE_BUTTON_LEFT]) {
+        //rotate camera just like Free movement
+        lm::mat4 R_yaw, R_pitch;
+        //yaw - axis is up vector of world
+        R_yaw.makeRotationMatrix(mouse.delta_x * turn_speed_dt, lm::vec3(0, 1, 0));
+        camera.forward = R_yaw * camera.forward;
+        //pitch - axis is strafe vector of camera i.e cross product of cam_forward and up
+        lm::vec3 pitch_axis = camera.forward.normalize().cross(lm::vec3(0, 1, 0));
+        R_pitch.makeRotationMatrix(mouse.delta_y * turn_speed_dt, pitch_axis);
+        camera.forward = R_pitch * camera.forward;
+    }
 
 	//fps control should have five ray colliders assigned
 	auto& colliders = ECS.getAllComponents<Collider>();

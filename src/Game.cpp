@@ -193,24 +193,25 @@ void Game::init() {
 
 	//players, cameras and lights
 	int ent_light_1 = createLight("Light 1", lm::vec3(100.0f, 100.0f, 100.0f), lm::vec3(1.0f, 1.0f, 1.0f));
-	int ent_player = createPlayer(lm::vec3(-2.0f, 3.0f, -2.0f), control_system_);
+	int ent_player = createPlayer(lm::vec3(-2.0f, 8.0f, -2.0f), control_system_);
     ECS.main_camera = ECS.getComponentID<Camera>(ent_player);
 
 
 	//******* INIT SCRIPTS SYSTEM ******//
 
-	//TODO: 
-	// - create a new class called MovePlatformScript which is derived from Script
-	//   (owner, teal floor entity)
-	// - in update function of script, translate platform up
+	//TODO:
+	// - create a new class (.h/.cpp) called MovePlatformScript which is derived from Script
+	// - in update function of script, translate transform of 'owner' entity
+    //   in +ve 'y' direction every frame
 	// - add boolean to start/stop translate when key is pressed 
 	//		- use (input_->GetKey(GLFW_KEY_xxxx) where xxxx is the key code
 
 	//TODO: here in Game::init
 	// - create new pointer instance of MovePlaformScript
+    // - (in script constructor, pass as 'owner' the id of teal floor entity)
 	// - register it with scripts_system
 
-	//TODO:
+	//TODO (task 2):
 	// - create a SwitchScript derived Script (owner green floor entity)
 	// - script gets collider component attached to owner entity
 	// - script also has pointer to MovePlatformScript

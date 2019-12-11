@@ -84,6 +84,7 @@ int main(void)
     glfwSetKeyCallback(window, key_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
     //variables storing mouse position
     double mouse_x, mouse_y;
